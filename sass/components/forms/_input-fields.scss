@@ -185,7 +185,7 @@ textarea.materialize-textarea {
     transition: transform .2s ease-out, color .2s ease-out;
     transform-origin: 0% 100%;
     text-align: initial;
-    transform: translateY(12px);
+    transform: translateY(6px);
 
     &:not(.label-icon).active {
       transform: translateY(-14px) scale(.8);

@@ -330,6 +330,17 @@ $shades: (
   "transparent":  transparent
 );
 
+$sps: (
+  "r032": #EF4034,
+  "p254": #91268F,
+  "p285": #007CC2,
+  "p368": #7AC142,
+  "p143": #FBAF3F,
+  "pblack": #231F20,
+  "pgray8": #BBBDC0,
+  "pgray11": #6D6E70
+);
+
 $colors: (
   "materialize-red": $materialize-red,
   "red": $red,
@@ -351,7 +362,8 @@ $colors: (
   "brown": $brown,
   "blue-grey": $blue-grey,
   "grey": $grey,
-  "shades": $shades
+  "shades": $shades,
+  "sps": $sps
 ) !default;
 
 

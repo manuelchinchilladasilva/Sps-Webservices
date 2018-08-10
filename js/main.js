@@ -111,7 +111,7 @@ $(document).ready(function(){
 			$('select').formSelect();
 		}
 	})
-
+	$('.sidenav').sidenav();
 	$('.tabs').tabs();
 	$('select').formSelect();
 	$('.collapsible').collapsible();
@@ -330,8 +330,6 @@ $(document).ready(function(){
 	var td_onHoover=function(e){
 		e.preventDefault();
 		var tr = $(this).parent('tr');
-
-
 		/*
 		Si la ultima fila
 		tiene la clase btn-controlData
@@ -351,9 +349,9 @@ $(document).ready(function(){
 		*/
 		tr.find('td.btn-controlData').fadeIn('2000');
 
-		$('tr').unbind('mouseleave').mouseleave(ex_hoover);
+		//$('tr').unbind('mouseleave').mouseleave(ex_hoover);
 	}
-	$('td').hover(td_onHoover);
+	$('td').hover(td_onHoover,ex_hoover);
 
 function add_botones(tr,del,edit)
 {

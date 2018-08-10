@@ -4,11 +4,19 @@ include "assets/queries.php";
 include "assets/_extras.php";
 
 ?>
-<div id="titulo_1" class="row center">
+<nav>
+  <div class="nav-wrapper sps r032">
+    <a href="#" class="brand-logo left"><img src="resources/corporative/sps_logo300.png" alt="#" class="top-logo-img"></a>
+    <ul id="nav-mobile" class="right">
+      <li><a href="collapsible.html">Servicios Web</a></li>
+    </ul>
+  </div>
+</nav>
+<!-- <div id="titulo_1" class="row center">
 	<div class="col s12">
 		<h5>Listado de Gestion de Servicios Web</h5>
 	</div>
-</div>
+</div> -->
 <div class="row">
 	<div class="col s12">
 		<ul class="tabs">

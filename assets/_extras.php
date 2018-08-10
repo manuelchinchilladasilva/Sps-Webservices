@@ -223,10 +223,6 @@ function print_table($name_table,$query)
 	$td  = '<td>';
 	$td_ = '</td>';
 
-	$_a='<table>';
-	$_a.='<thead>';
-	$_a.=$tr;
-
 	$list_proveedores  = array('Nombre','Cuenta','Usuario','Contraseña','Comentarios');
 	$list_sitios       = array('Dominio','Hosting','IP del Sitio','Propietario','Status');
 	$list_credenciales = array('Dominio','Descripcion','Usuario','Password','Comentarios');
@@ -236,6 +232,8 @@ function print_table($name_table,$query)
 	switch ($name_table) 
 	{
 		case 'Proveedores':
+			$_a='<table id="t_proveedores" class="data_table striped highlight">';
+			$_a.='<thead>';
 			foreach ($list_proveedores as $index => $val) {
 				$_a.=$th.$val.$th_;
 			}
@@ -246,6 +244,8 @@ function print_table($name_table,$query)
 			break;
 
 		case 'Sitios':
+			$_a='<table id="t_sitios" class="data_table highlight">';
+			$_a.='<thead>';
 			foreach ($list_sitios as $index => $val) {
 				$_a.=$th.$val.$th_;
 			}
@@ -255,6 +255,8 @@ function print_table($name_table,$query)
 			break;
 
 		case 'Credenciales':
+			$_a='<table id="t_credenciales" class="data_table highlight">';
+			$_a.='<thead>';
 			foreach ($list_credenciales as $index => $val) {
 				$_a.=$th.$val.$th_;
 			}
@@ -264,6 +266,8 @@ function print_table($name_table,$query)
 			break;
 
 		case 'Facturacion':
+			$_a='<table id="t_facturacion" class="data_table highlight">';
+			$_a.='<thead>';
 			foreach ($list_facturacion as $index => $val) {
 				$_a.=$th.$val.$th_;
 			}
@@ -273,6 +277,8 @@ function print_table($name_table,$query)
 			break;
 
 		case 'Contactos':
+			$_a='<table id="t_contactos" class="data_table highlight">';
+			$_a.='<thead>';
 			foreach ($list_facturacion as $index => $val) {
 				$_a.=$th.$val.$th_;
 			}
@@ -373,7 +379,6 @@ function print_body($query,$tabla)
 			# code...
 			break;
 	}
-	$_b.='</tr>';
 	$_b.='</tbody>';
 	$_b.='</table>';
 	echo $_b;
