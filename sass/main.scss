@@ -1,0 +1,74 @@
+.center{
+	margin: 1rem;
+	text-align: center;
+}
+h1{
+	color: #2c3e50;
+}
+#formulario_de_sitio{
+	width: 900px;
+	height: auto;
+	border: 1px solid #95a5a6;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 50px;
+}
+.title_formulario{
+	margin-top: 25px;
+	margin-bottom: 10px;
+}
+.in_section{
+	margin-top: 25px;
+}
+.button_bar{
+	margin-top: 20px;
+}
+.l_hidden{
+	display: none;
+}
+.buton_add_reg{
+	margin: 15px;
+	text-align: right;
+}
+.modal{
+    width: 70%;
+    height: 500px;
+    max-height: 600px;
+}
+.tabla_datos{
+	margin-top: 25px;
+}
+.tit_table{
+	margin-top: 30px;
+	margin-bottom: 25px;
+	text-align: center;
+}
+.buton_add_reg{
+	margin-top: 30px;	
+	margin-bottom: 25px;
+}
+.button-line{
+	height: 10px;
+	justify-content: center;
+}
+.hover-item{
+	//background-color: blue;
+}
+.hover-item:hover{
+	background-color: rgba(239, 64, 52,0.5);
+}
+.btn-controlData{
+	//display: none;
+	width: 30px !important;
+	text-align: center;
+	a{
+		width: 50px;
+		background-color: rgb(0, 124, 194) !important;
+	}
+}
+.btn-controlData:hover{
+	//display: auto;
+}
+
