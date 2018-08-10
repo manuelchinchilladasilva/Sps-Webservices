@@ -364,7 +364,7 @@ function add_botones(tr,del,edit)
 	tr.append(del)
 	tr.append(edit)
 	btn_edit_click(tr)
-	btn_delete_click(tr)
+	btn_delete_click(tr,$(tr).parent().parent().parent().attr('id'))
 	$('.tooltipped').tooltip();
 }
 function add_botonesEdit(tr,leave,done)
@@ -400,20 +400,27 @@ function btn_edit_click(tr){
 		})
 	})
 }
-function btn_delete_click(tr){
+function btn_delete_click(tr,tabla_name)
+{
 	$('.btn-controlData a#btn-delete').off().on('click',()=>{
+
+
+		let a=$(this).parent('table');
+
 		if (confirm('Quieres eliminar esto?')) {
+
 			$.ajax({
 				    data : {
-				    	'serv':'dlt-Credenciales',
-				    	'id_cred':$(tr).find('td span')[0].innerText
+				    	'serv':'dlt-reg',
+				    	'table':tabla_name,
+				    	'id_reg':$(tr).find('td span')[0].innerText
 				    },
 				     url : "assets/ajax_admin.php",
 				    type : "POST",
 				dataType : "JSON",
 				beforeSend: function(xhr){
-					// console.log(xhr)
-					// console.log(credenciales);
+					console.log(xhr)
+					console.log(a);
 				},
 				error: function(jqXHR,textStatus,errorThrown){
 					console.log('Ups, algo anda mal');
@@ -510,24 +517,18 @@ function btn_done_click(tr){
 						}
 					})
 				}
+				end_buttons(tr);
 			}
 		})
-		end_buttons(tr);
 	})
-
 }
 function btn_cancel_click(tr){
 	$('.btn-controlData a#btn-cancel').on('click',function(){
-		tr.removeClass('0active');
-		tr.find('td.btn-controlData').remove();
-		tr.find('td input').remove();
-		tr.append(btn_delete);
-		tr.append(btn_edit);
-		tr.find('td span').show();
-		tr.find('td.btn-controlData').show('2000');
+		end_buttons(tr);
 	})
 }
-function end_buttons(tr){
+function end_buttons(tr)
+{
 	tr.find('td.btn-controlData').remove();
 	tr.find('td input').remove();
 	tr.append(btn_delete);

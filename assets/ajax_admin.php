@@ -153,31 +153,49 @@ switch  ($_POST["serv"]) {
 		}
 	break;
 
-	case "dlt-Credenciales":
-		$query_text="DELETE FROM `it_webservices`.`credenciales`
-		WHERE `id_cred`  = ?;";
+	case "dlt-reg":
+		switch ($_POST["table"]) {
+			case 'tabla_credenciales':
+			$query_text="DELETE FROM `it_webservices`.`credenciales` WHERE `id_cred`=?;";
+			break;
+
+			case 'tabla_proveedores':
+			$query_text="DELETE FROM `it_webservices`.`proveedores` WHERE id_proveed=?;";
+			break;
+
+			case 'tabla_sitios':
+			$query_text="DELETE FROM `it_webservices`.`sitios` WHERE id_site=?;"; 
+			break;
+
+			case 'tabla_facturacion':
+			$query_text="DELETE FROM `it_webservices`.`datos_facturacion` WHERE id_data=?;"; 
+			break;
+
+			case 'tabla_contacto':
+			$query_text="DELETE FROM `it_webservices`.`telefonos_contacto` WHERE id_tlf=?;";
+			break;
+		}
 
 		if (!$dlr_credenciales = $con->prepare($query_text)) {
 			echo($dlr_credenciales->error);
 			exit;
 		}
-		if (!$dlr_credenciales->bind_param("i", $id_cred)) {
+		if (!$dlr_credenciales->bind_param("i", $id_reg)) {
 			echo($dlr_credenciales->error);
 			exit;
 		}
 
-		$id_cred = $_POST["id_cred"];
-		
-		if ($dlr_credenciales->execute()) {
+		$id_reg = $_POST["id_reg"];
+		if ($dlr_credenciales->execute()) {	
 			$sendData = array(
-				'id_cred' => $id_cred, 
+				'id_reg' => $id_reg, 
 			);
-			echo json_encode($id_cred);
+			echo json_encode($id_reg);
 			$dlr_credenciales->close();
-		} else {
-			echo($dlr_credenciales->error);
-			exit;
-		}
+		} else {	
+			echo($dlr_credenciales->error);	
+			exit;	
+		}	
 	break;
 
 
