@@ -179,11 +179,11 @@ $(document).ready(function(){
 					}))).append($('<td>').append($('<span>',{
 						'text':data.coment
 					})))
-				$('div#tabla_proveedores table tbody').append(row);
-				console.log(textStatus);
-				console.log(jqXHR);
-			}
-		})
+					$('div#tabla_proveedores table tbody').append(row);
+					console.log(textStatus);
+					console.log(jqXHR);
+				}
+			})
 	})
 
 	$('#btn_add_sitio').click(function(){
@@ -353,8 +353,8 @@ $(document).ready(function(){
 	}
 	$('td').hover(td_onHoover,ex_hoover);
 
-function add_botones(tr,del,edit)
-{
+	function add_botones(tr,del,edit)
+	{
 	/*
 	Agrega los botones
 	Editar y eliminar
@@ -364,175 +364,181 @@ function add_botones(tr,del,edit)
 	btn_edit_click(tr)
 	btn_delete_click(tr,$(tr).parent().parent().parent().attr('id'))
 	$('.tooltipped').tooltip();
-}
-function add_botonesEdit(tr,leave,done)
-{
-	tr.append(leave)
-	tr.append(done)
-	btn_done_click(tr)
-	btn_cancel_click(tr)
-	$('.tooltipped').tooltip();
-}
-function btn_edit_click(tr){
-	$('.btn-controlData a#btn-edit').off('click').on('click',(e)=>{
-		tr.addClass('0active');
-		tr.find('td.btn-controlData').remove();
-		tr.append(btn_edit_cancel);
-		tr.append(btn_edit_done);
-		$('.btn_0active').fadeIn('3000')
-		tr.find('td span').hide();
+	}
+	function add_botonesEdit(tr,leave,done)
+	{
+		tr.append(leave)
+		tr.append(done)
+		btn_done_click(tr)
+		btn_cancel_click(tr)
+		$('.tooltipped').tooltip();
+	}
+	function btn_edit_click(tr)
+	{
+		$('.btn-controlData a#btn-edit').off('click').on('click',(e)=>{
+			tr.addClass('0active');
+			tr.find('td.btn-controlData').remove();
+			tr.append(btn_edit_cancel);
+			tr.append(btn_edit_done);
+			$('.btn_0active').fadeIn('3000')
+			tr.find('td span').hide();
 
-		tr.find('td').each((i,val,arr)=>{
-			if (!($(val).hasClass('l_hidden')|| $(val).hasClass('btn-controlData'))) { 
-				var text=$(val).text()
-				console.log($(val).find('span').attr('id'))
-				var json_text={
-					'id':$(val).find('span').attr('id'),
-					'type':'text',
-					'class':'validate',
-					'placeholder':text.toString()
-				}
-				var inp_text=$('<input>',json_text);
-				$(val).append(inp_text);
-			} 
-		})
-	})
-}
-function btn_delete_click(tr,tabla_name)
-{
-	$('.btn-controlData a#btn-delete').off().on('click',()=>{
-
-
-		let a=$(this).parent('table');
-
-		if (confirm('Quieres eliminar esto?')) {
-
-			$.ajax({
-				    data : {
-				    	'serv':'dlt-reg',
-				    	'table':tabla_name,
-				    	'id_reg':$(tr).find('td span')[0].innerText
-				    },
-				     url : "assets/ajax_admin.php",
-				    type : "POST",
-				dataType : "JSON",
-				beforeSend: function(xhr){
-					console.log(xhr)
-					console.log(a);
-				},
-				error: function(jqXHR,textStatus,errorThrown){
-					console.log('Ups, algo anda mal');
-					console.log(jqXHR);
-					console.log(textStatus);
-					console.log(errorThrown);
-
-				},
-				success: function(data,textStatus,jqXHR){
-					console.log(data);
-					tr.remove();
-				}
-			})
-		}
-	})
-}
-function btn_done_click(tr){
-	$('.btn-controlData a#btn-done').off().one('click',()=>{
-		var credenciales={
-			'serv' : 'updt-Credenciales',
-			'id_cred' : tr.find('td span#id_cred').text(),
-			'dominio' : '',
-			'descripcion' : '',
-			'user' : '',
-			'passw' : '',
-			'comment' : ''
-		}
-
-		/*
-		Se barren todas las etiquetas
-		TD hijas del TR en hover
-		*/
-		tr.find('td').each((i,val,arr)=>{
-			let in_td=$(val);
-			/*
-			Se barren los elementos que esten
-			dentro del TD
-			*/
-			in_td.contents().each((x,valx,arrx)=>{
-				switch($(valx).prop('tagName')){
-					case 'INPUT':
-					let _SPAN_=$(valx).siblings();// hermanos SPAN
-					let _INPUT_=$(valx);// valor INPUT
-
-					/*
-					Se barren los valores de credenciales
-					y se evalua cuando el index de la variable
-					sea igual al id del objeto INPUT
-					*/
-					for(let i in credenciales){
-						/*Se evalua que el objeto INPUT
-						no se encuentre vacio.
-						Si el objeto INPUT no esta vacio
-						se guarda el valor en el objeto
-						credenciales, de lo contrario se
-						guarda el valor del SPAN hermano
-						en el objeto credenciales
-						*/
-						if ($(_INPUT_).attr('id')==i) {
-							if ($(_INPUT_).val()!='') {
-								credenciales[i]=$(_INPUT_).val();	
-							} else {
-								credenciales[i]=$(_SPAN_).text();	
-							}
-						}
+			tr.find('td').each((i,val,arr)=>{
+				if (!($(val).hasClass('l_hidden')|| $(val).hasClass('btn-controlData'))) { 
+					var text=$(val).text()
+					console.log($(val).find('span').attr('id'))
+					var json_text={
+						'id':$(val).find('span').attr('id'),
+						'type':'text',
+						'class':'validate',
+						'placeholder':text.toString()
 					}
-					break;
-				}
+					var inp_text=$('<input>',json_text);
+					$(val).append(inp_text);
+				} 
 			})
 		})
+	}
+	function btn_delete_click(tr,tabla_name)
+	{
+		$('.btn-controlData a#btn-delete').off().on('click',()=>{
 
-		$.ajax({
-			    data : credenciales,
-			     url : "assets/ajax_admin.php",
-			    type : "POST",
-			dataType : "JSON",
-			beforeSend: function(xhr){
-				// console.log(xhr)
-				// console.log(credenciales);
-			},
-			error: function(jqXHR,textStatus,errorThrown){
-				console.log('Ups, algo anda mal');
-				console.log(jqXHR);
-				console.log(textStatus);
-				console.log(errorThrown);
 
-			},
-			success: function(data,textStatus,jqXHR){
-				console.log(data);
-				for (let i in data){
-					tr.find('td span').each((x,val,arr)=>{
-						if ($(val).attr('id')==i) {
-							$(val).text(data[i])
-						}
-					})
-				}
-				end_buttons(tr);
+			let a=$(this).parent('table');
+
+			if (confirm('Esta seguro de que quiere eliminar este registro?')) {
+
+				$.ajax({
+					data : {
+						'serv':'dlt-reg',
+						'table':tabla_name,
+						'id_reg':$(tr).find('td span')[0].innerText
+					},
+					url : "assets/ajax_admin.php",
+					type : "POST",
+					dataType : "JSON",
+					beforeSend: function(xhr){
+						console.log(xhr)
+						console.log(a);
+					},
+					error: function(jqXHR,textStatus,errorThrown){
+						console.log('Ups, algo anda mal');
+						console.log(jqXHR);
+						console.log(textStatus);
+						console.log(errorThrown);
+
+					},
+					success: function(data,textStatus,jqXHR){
+						console.log(data);
+						tr.remove();
+					}
+				})
 			}
 		})
-	})
-}
-function btn_cancel_click(tr){
-	$('.btn-controlData a#btn-cancel').on('click',function(){
-		end_buttons(tr);
-	})
-}
-function end_buttons(tr)
-{
-	tr.find('td.btn-controlData').remove();
-	tr.find('td input').remove();
-	tr.append(btn_delete);
-	tr.append(btn_edit);
-	tr.find('td span').show();
-	tr.find('td.btn-controlData').show('2000');
-	tr.removeClass('0active');
-}
+	}
+	function btn_done_click(tr)
+	{
+		$('.btn-controlData a#btn-done').off().one('click',()=>{
+			var credenciales={
+				'serv' : 'updt-Credenciales',
+				'id_cred' : tr.find('td span#id_cred').text(),
+				'dominio' : '',
+				'descripcion' : '',
+				'user' : '',
+				'passw' : '',
+				'comment' : ''
+			}
+
+			/*
+			Se barren todas las etiquetas
+			TD hijas del TR en hover
+			*/
+			tr.find('td').each((i,val,arr)=>{
+				let in_td=$(val);
+				/*
+				Se barren los elementos que esten
+				dentro del TD
+				*/
+				in_td.contents().each((x,valx,arrx)=>{
+					switch($(valx).prop('tagName')){
+						case 'INPUT':
+						let _SPAN_=$(valx).siblings();// hermanos SPAN
+						let _INPUT_=$(valx);// valor INPUT
+
+						/*
+						Se barren los valores de credenciales
+						y se evalua cuando el index de la variable
+						sea igual al id del objeto INPUT
+						*/
+						for(let i in credenciales){
+							/*Se evalua que el objeto INPUT
+							no se encuentre vacio.
+							Si el objeto INPUT no esta vacio
+							se guarda el valor en el objeto
+							credenciales, de lo contrario se
+							guarda el valor del SPAN hermano
+							en el objeto credenciales
+							*/
+							if ($(_INPUT_).attr('id')==i) {
+								if ($(_INPUT_).val()!='') {
+									credenciales[i]=$(_INPUT_).val();	
+								} else {
+									credenciales[i]=$(_SPAN_).text();	
+								}
+							}
+						}
+						break;
+					}
+				})
+			})
+			if (confirm('Seguro de que quiere modificar este registro?')) 
+			{
+				$.ajax({
+					data : credenciales,
+					url : "assets/ajax_admin.php",
+					type : "POST",
+					dataType : "JSON",
+					beforeSend: function(xhr){
+					// console.log(xhr)
+					// console.log(credenciales);
+					},
+					error: function(jqXHR,textStatus,errorThrown){
+						console.log('Ups, algo anda mal');
+						console.log(jqXHR);
+						console.log(textStatus);
+						console.log(errorThrown);
+
+					},
+					success: function(data,textStatus,jqXHR){
+						console.log(data);
+						for (let i in data){
+							tr.find('td span').each((x,val,arr)=>{
+								if ($(val).attr('id')==i) {
+									$(val).text(data[i])
+								}
+							})
+						}
+						end_buttons(tr);
+					}
+				})
+			}
+
+		})
+	}
+	function btn_cancel_click(tr)
+	{
+		$('.btn-controlData a#btn-cancel').on('click',function(){
+			end_buttons(tr);
+		})
+	}
+	function end_buttons(tr)
+	{
+		tr.find('td.btn-controlData').remove();
+		tr.find('td input').remove();
+		tr.append(btn_delete);
+		tr.append(btn_edit);
+		tr.find('td span').show();
+		tr.find('td.btn-controlData').show('2000');
+		tr.removeClass('0active');
+	}
 });

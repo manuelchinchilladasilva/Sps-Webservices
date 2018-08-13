@@ -279,7 +279,7 @@ function print_table($name_table,$query)
 		case 'Contactos':
 			$_a='<table id="t_contactos" class="data_table highlight">';
 			$_a.='<thead>';
-			foreach ($list_facturacion as $index => $val) {
+			foreach ($list_contacto as $index => $val) {
 				$_a.=$th.$val.$th_;
 			}
 			$_a.=$tr_;
