@@ -12,7 +12,7 @@ function modal_sitios(){
 					<h5>Datos de Sitio</h5>
 				</div>
 				<div class="input-field col s4">
-					<input type="text" id="dominio-input" class="autocomplete">
+					<input type="text" id="dominio-input" class="autocomplete" value="algo.com">
 					<label for="dominio-input">Dominio</label>
 				</div>
 				<div class="input-field col s4">
@@ -22,17 +22,17 @@ function modal_sitios(){
 					<label for="hosting_input">Hosting</label>
 				</div>        
 				<div class="input-field col s4">
-					<input type="text" id="ip-input" class="autocomplete">
+					<input type="text" id="ip-input" class="autocomplete" value="125.2.2.2">
 					<label for="ip-input">Ip site</label>
 				</div>   
 				<div class="input-field col s6">
-					<input type="text" id="propietario-input" class="autocomplete">
+					<input type="text" id="propietario-input" class="autocomplete" value="depto IT">
 					<label for="propietario-input">Propietario</label>
 				</div>
 				<div class="input-field col s6">
 					<select id="status-input">
-						<option value="" disabled selected>Status</option>
-						<option value="1">ACTIVO</option>
+						<option value="" disabled>Status</option>
+						<option value="1" selected>ACTIVO</option>
 						<option value="2">INACTIVO</option>
 					</select>
 					<label for="status-input">Status</label>
@@ -310,7 +310,7 @@ function print_body($query,$tabla)
 				$_b.='<td><span id="cuenta">'.$row["cuenta"].'</span></td>';
 				$_b.='<td><span id="client_area_user">'.$row["client_area_user"].'</span></td>';
 				$_b.='<td><span id="client_area_pass">'.$row["client_area_pass"].'</span></td>';
-				$_b.='<td><span id="coments">'.$row["client_area_pass"].'</span></td>';
+				$_b.='<td><span id="coments">'.$row["coment"].'</span></td>';
 				$_b.='</tr>';
 
 			}

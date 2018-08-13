@@ -52,7 +52,7 @@ switch  ($_POST["serv"]) {
 			echo "0 results";
 
 		}
-	echo json_encode($data_array);
+		echo json_encode($data_array);
 	break;
 
 	case "lista_sitios":
@@ -71,26 +71,43 @@ switch  ($_POST["serv"]) {
 			echo "0 results";
 
 		}
-	echo json_encode($dominios_array);
+		echo json_encode($dominios_array);
 	break;
 
 	case "sitios":
-		$insert_prov = $con->prepare("INSERT INTO 'it_webservices'.'sitios'
-			('dominio',
-			'hosting',
-			'ip_site',
-			'prop',
-			'status') VALUES (?,?,?,?,?)");
-		$dominio     = $_POST["dominio"];
-		$hosting     = $_POST["hosting"];
-		$ip          = $_POST["ip"];
-		$propietario = $_POST["propietario"];
-		$status      = $_POST["status"];
 
-		//$insert_prov->bind_param("sssss", $dominio, $hosting, $ip,$propietario,$status);
-		//$insert_prov->execute();
-		//$insert_prov->close();
-		echo json_encode("Registro creado sitios");
+			$query_text="INSERT INTO sitios(dominio,hosting,ip_site,prop,status) VALUES (?,?,?,?,?);";
+
+			if (!$new_site = $con->prepare($query_text)) {
+				echo $new_site->error;
+			}
+
+
+			$dominio     = $_POST["dominio"];
+			$hosting     = $_POST["hosting"];
+			$ip          = $_POST["ip"];
+			$propietario = $_POST["propietario"];
+			$status      = $_POST["status"];
+
+			$new_site->bind_param("sisss", $dominio, $hosting, $ip, $propietario, $status);
+
+
+		if ($new_site = $con->execute()) {
+			$sendData = array(
+				'dominio'     => $dominio,
+				'hosting'     => $hosting,
+				'ip'          => $ip,
+				'propietario' => $propietario,
+				'status'      => $status
+			);
+			echo json_encode($sendData->error);
+			// $new_site->close();
+		} 
+		else {
+			echo $new_site->error;
+			$new_site->close();
+		}
+
 	break;
 
 	case "credenciales":
@@ -220,22 +237,37 @@ switch  ($_POST["serv"]) {
 	break;
 
 	case "contactos":
-		$insert_prov = $con->prepare("INSERT INTO `it_webservices`.`telefonos_contacto`
+		$query_text="INSERT INTO `it_webservices`.`telefonos_contacto`
 			(`id_prov`,
 			`contacto`,
 			`nro_tlf`,
 			`coment`)
-			VALUES (?,?,?,?,?)");
-
+			VALUES (?,?,?,?)";
+		if (!$insert_prov = $con->prepare($query_text)) {
+			echo($insert_prov->error);
+			exit;
+		}
 		$proveedor    = $_POST["proveedor"];
 		$contacto     = $_POST["contacto"];
 		$nro_telefono = $_POST["nro_telefono"];
 		$comentario   = $_POST["comentario"];
 
-		//$insert_prov->bind_param("ssss", $proveedor, $contacto, $nro_telefono,$comentario);
-		//$insert_prov->execute();
-		//$insert_prov->close();
-		echo json_encode("Registro creado Contactos");
+		$insert_prov->bind_param("isis", $proveedor, $contacto, $nro_telefono,$comentario);
+
+		if ($insert_prov->execute()) {
+			$sendData = array(
+				'proveedor'    => $proveedor,
+				'contacto'     => $contacto,
+				'nro_telefono' => $nro_telefono,
+				'comentario'   => $comentario
+			);
+			echo json_encode($sendData);
+			$insert_prov->close();
+		} else {
+			echo($insert_prov->error);
+			exit;
+		}
+		// echo json_encode("Registro creado Contactos");
 	break;
 	default:
  		# code...

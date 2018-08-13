@@ -205,6 +205,7 @@ $(document).ready(function(){
 				console.log(inputs);
 			},
 			error: function(jqXHR,textStatus,errorThrown){
+				alert('Ups, algo anda mal');
 				console.log('Ups, algo anda mal');
 				console.log(jqXHR);
 				console.log(textStatus);
@@ -290,11 +291,11 @@ $(document).ready(function(){
 
 	$('#btn_add_contacto').click(function(){
 		let inputs = {
-			'serv'      : 'contactos',
-			'proveedor' : $('#lista_proveedores')[0].value,
-			'contacto'  : $('#servicio_input')[0].value,
-			'nro_telefono'     : $('#ciclo_input')[0].value,
-			'comentario'     : $('#fecha_input')[0].value,
+			'serv'         : 'contactos',
+			'proveedor'    : $('#lista_proveedores_cont')[0].value,
+			'contacto'     : $('#contacto_input')[0].value,
+			'nro_telefono' : $('#telefono_input')[0].value,
+			'comentario'   : $('#coment_input')[0].value,
 		};
 		$.ajax({
 			data     : inputs,
