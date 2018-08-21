@@ -365,7 +365,7 @@ function print_body($query,$tabla)
 			while ( $row = $query->fetch_assoc() ) 
 			{
 				$_b.='<tr>';
-				$_b.='<td class="l_hidden" id="id_proveedor"><span id="id_tlf">'.$row["d_tlf"].'</span></td>';
+				$_b.='<td class="l_hidden" id="id_proveedor"><span id="id_tlf">'.$row["id_tlf"].'</span></td>';
 				$_b.='<td><span id="id_prov">'.$row["nombre"].'</span></td>';
 				$_b.='<td><span id="contacto">'.$row["contacto"].'</span></td>';
 				$_b.='<td><span id="nro_tlf">'.$row["nro_tlf"].'</span></td>';

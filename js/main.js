@@ -103,12 +103,9 @@ $(document).ready(function(){
 		success: function(data,textStatus,jqXHR){
 			//console.log('Exitos!');
 			data.forEach(function(val,index,arr){
-				console.log(val.id_dom);
 				let a=$('<option>',{'value':val.id_dom,'text':val.dominio});
 				$('#lista_dominio').append(a);
-				console.log(a)
 			});
-			console.log(data);
 			//console.log(textStatus);
 			//console.log(jqXHR);
 			$('select').formSelect();
@@ -406,8 +403,6 @@ $(document).ready(function(){
 	function btn_delete_click(tr,tabla_name)
 	{
 		$('.btn-controlData a#btn-delete').off().on('click',()=>{
-
-
 			let a=$(this).parent('table');
 
 			if (confirm('Esta seguro de que quiere eliminar este registro?')) {
@@ -423,7 +418,7 @@ $(document).ready(function(){
 					dataType : "JSON",
 					beforeSend: function(xhr){
 						console.log(xhr)
-						console.log(a);
+						console.log(this.data);
 					},
 					error: function(jqXHR,textStatus,errorThrown){
 						console.log('Ups, algo anda mal');

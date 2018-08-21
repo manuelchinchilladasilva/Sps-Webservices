@@ -219,22 +219,23 @@ switch  ($_POST["serv"]) {
 
 
 	case "facturacion":
-		$insert_prov = $con->prepare("INSERT INTO 'it_webservices'.'datos_facturacion'
-			('id_proveedor',
-			'servicio',
-			'ciclo_facturacion',
-			'fecha_corte',
-			'costo')
-			VALUES (?,?,?,?,?)");
+		$query_text="INSERT INTO datos_facturacion (id_proveedor, servicio, ciclo_facturacion, fecha_corte, costo) VALUES (?,?,?,?,?);"; 
+
+		$insert_prov = $con->prepare($query_text);
+
 		$proveedor = $_POST["proveedor"];
 		$servicio  = $_POST["servicio"];
 		$ciclo     = $_POST["ciclo"];
 		$fecha     = $_POST["fecha"];
 		$costo     = $_POST["costo"];
 
-		//$insert_prov->bind_param("sssss", $proveedor, $servicio, $ciclo,$fecha,$costo);
-		//$insert_prov->execute();
-		//$insert_prov->close();
+		$insert_prov->bind_param("issss", $proveedor, $servicio, $ciclo,$fecha,$costo);
+		if (!$insert_prov->execute()) {
+			echo json_encode($insert_prov->error);
+			die();
+		}
+		
+		$insert_prov->close();
 		echo json_encode("Registro creado facturacion");
 	break;
 
