@@ -103,9 +103,12 @@ $(document).ready(function(){
 		success: function(data,textStatus,jqXHR){
 			//console.log('Exitos!');
 			data.forEach(function(val,index,arr){
-				$('#lista_dominio').append($('<option>',{'value':val,'text':val}));
+				console.log(val.id_dom);
+				let a=$('<option>',{'value':val.id_dom,'text':val.dominio});
+				$('#lista_dominio').append(a);
+				console.log(a)
 			});
-			//console.log(data);
+			console.log(data);
 			//console.log(textStatus);
 			//console.log(jqXHR);
 			$('select').formSelect();

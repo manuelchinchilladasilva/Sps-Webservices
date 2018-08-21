@@ -61,9 +61,9 @@ switch  ($_POST["serv"]) {
 		$dominios_array  = array();
 
 		if ($result_dominios->num_rows > 0) {
-			while($row = $result_dominios->fetch_array()) {
+			while($row = $result_dominios->fetch_assoc()) {
 
-				array_push($dominios_array,$row['dominio']);
+				array_push($dominios_array,array("dominio"=>$row['dominio'],"id_dom"=>$row['id_site']));
 
 			}
 		} else {
@@ -91,8 +91,7 @@ switch  ($_POST["serv"]) {
 
 			$new_site->bind_param("sisss", $dominio, $hosting, $ip, $propietario, $status);
 
-
-		if ($new_site = $con->execute()) {
+		if ($new_site->execute()) {
 			$sendData = array(
 				'dominio'     => $dominio,
 				'hosting'     => $hosting,
@@ -100,8 +99,7 @@ switch  ($_POST["serv"]) {
 				'propietario' => $propietario,
 				'status'      => $status
 			);
-			echo json_encode($sendData->error);
-			// $new_site->close();
+			echo json_encode($sendData);
 		} 
 		else {
 			echo $new_site->error;
@@ -111,21 +109,25 @@ switch  ($_POST["serv"]) {
 	break;
 
 	case "credenciales":
-		$insert_prov = $con->prepare("INSERT INTO 'it_webservices'.'credenciales'
-			('id_site',
-			'descripcion',
-			'user',
-			'passw',
-			'comment') VALUES (?,?,?,?,?)");
+		$query_text="INSERT INTO credenciales(id_site,descripcion,user,passw,comment) VALUES (?,?,?,?,?);";
+
+		$insert_prov = $con->prepare($query_text);
+
 		$dominio     = $_POST["dominio"];
 		$descripcion = $_POST["descripcion"];
 		$user        = $_POST["user"];
 		$passw       = $_POST["passw"];
 		$comment     = $_POST["comment"];
-
-		//$insert_prov->bind_param("sssss", $dominio, $descripcion, $user,$passw,$comment);
-		//$insert_prov->execute();
-		//$insert_prov->close();
+		if (!$insert_prov->bind_param("issss",$dominio,$descripcion,$user,$passw,$comment)) {
+			echo json_encode("Algo no anda bien con el binding");
+			die();
+		}
+		if (!$insert_prov->execute()) {
+			// echo $insert_prov->error;
+			echo json_encode($insert_prov->error);
+			die();
+		}
+		$insert_prov->close();
 		echo json_encode("Registro creado credenciales");
 	break;
 
