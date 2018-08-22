@@ -297,7 +297,6 @@ function print_table($name_table,$query)
 function print_body($query,$tabla)
 {
 	$_b='<tbody>';
-	$_b.='<tr>';
 
 	switch ($tabla) 
 	{
@@ -310,7 +309,7 @@ function print_body($query,$tabla)
 				$_b.='<td><span id="cuenta">'.$row["cuenta"].'</span></td>';
 				$_b.='<td><span id="client_area_user">'.$row["client_area_user"].'</span></td>';
 				$_b.='<td><span id="client_area_pass">'.$row["client_area_pass"].'</span></td>';
-				$_b.='<td><span id="coments">'.$row["coment"].'</span></td>';
+				$_b.='<td><span id="coments">'.$row["coments"].'</span></td>';
 				$_b.='</tr>';
 
 			}

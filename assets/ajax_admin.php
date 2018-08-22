@@ -62,9 +62,7 @@ switch  ($_POST["serv"]) {
 
 		if ($result_dominios->num_rows > 0) {
 			while($row = $result_dominios->fetch_assoc()) {
-
 				array_push($dominios_array,array("dominio"=>$row['dominio'],"id_dom"=>$row['id_site']));
-
 			}
 		} else {
 
