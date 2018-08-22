@@ -1,4 +1,22 @@
 $(document).ready(function(){
+	$('.sidenav').sidenav();
+	$('.tabs').tabs();
+	$('select').formSelect();
+	$('.collapsible').collapsible();
+	$('.modal').modal();
+	$('#new_site').click(function(){
+		$('#input_site').fadeToggle('slow');
+	})
+	$('#new_cred').click(function(){
+		$('#input_credenciales').fadeToggle('slow');
+	})
+	$('#new_fact').click(function(){
+		$('#input_facturacion').fadeToggle('slow');
+	})
+	$('#new_contact').click(function(){
+		$('#input_contacto').fadeToggle('slow');
+	})
+
 	var btn_delete = $('<td>',{
 		'style':'display:none',
 		'class':'btn-controlData delete'
@@ -61,72 +79,55 @@ $(document).ready(function(){
 		type     : "POST",
 		dataType : "JSON",
 		beforeSend: function(xhr){
-		//console.log(xhr);
-	},
-	error: function(jqXHR,textStatus,errorThrown){
-		console.log('Ups, algo anda mal');
-		console.log(jqXHR);
-		console.log(textStatus);
-		console.log(errorThrown);
+			//console.log(xhr);
+		},
+		error: function(jqXHR,textStatus,errorThrown){
+			console.log('Ups, algo anda mal');
+			console.log(jqXHR);
+			console.log(textStatus);
+			console.log(errorThrown);
 
-	},
-	success: function(data,textStatus,jqXHR){
-		//console.log('Exitos!');
-		//console.log(data);
-		data.forEach(function(val,index,arr){
-			$('#lista_hosting').append($('<option>',{'value':val.id_proveed,'text':val.nombre}));
-			$('#hosting_').append($('<option>',{'value':val.id_proveed,'text':val.nombre}));
-			$('#lista_proveedores').append($('<option>',{'value':val.id_proveed,'text':val.nombre}));
-			$('#lista_proveedores_cont').append($('<option>',{'value':val.id_proveed,'text':val.nombre}));
-		});
-		//console.log(data);
-		//console.log(textStatus);
-		//console.log(jqXHR);
-		$('select').formSelect();
-	}
-})
+		},
+		success: function(data,textStatus,jqXHR){
+			//console.log('Exitos!');
+			//console.log(data);
+			data.forEach(function(val,index,arr){
+				$('#lista_hosting').append($('<option>',{'value':val.id_proveed,'text':val.nombre}));
+				$('#hosting_').append($('<option>',{'value':val.id_proveed,'text':val.nombre}));
+				$('#lista_proveedores').append($('<option>',{'value':val.id_proveed,'text':val.nombre}));
+				$('#lista_proveedores_cont').append($('<option>',{'value':val.id_proveed,'text':val.nombre}));
+			});
+			//console.log(data);
+			//console.log(textStatus);
+			//console.log(jqXHR);
+			$('select').formSelect();
+		}
+	})
 	$.ajax({
 		data     : {'serv'    : 'lista_sitios'},
 		url      : "assets/ajax_admin.php",
 		type     : "POST",
 		dataType : "JSON",
 		beforeSend: function(xhr){
-		//console.log(xhr);
-	},
-	error: function(jqXHR,textStatus,errorThrown){
-		console.log('Ups, algo anda mal');
-		console.log(jqXHR);
-		console.log(textStatus);
-		console.log(errorThrown);
+			//console.log(xhr);
+		},
+		error: function(jqXHR,textStatus,errorThrown){
+			console.log('Ups, algo anda mal');
+			console.log(jqXHR);
+			console.log(textStatus);
+			console.log(errorThrown);
 
-	},
-	success: function(data,textStatus,jqXHR){
-		//console.log('Exitos!');
-		data.forEach(function(val,index,arr){
-			let a=$('<option>',{'value':val.id_dom,'text':val.dominio});
-			$('#lista_dominio').append(a);
-		});
-		//console.log(textStatus);
-		//console.log(jqXHR);
-		$('select').formSelect();
-	}
-})
-	$('.sidenav').sidenav();
-	$('.tabs').tabs();
-	$('select').formSelect();
-	$('.collapsible').collapsible();
-	$('.modal').modal();
-	$('#new_site').click(function(){
-		$('#input_site').fadeToggle('slow');
-	})
-	$('#new_cred').click(function(){
-		$('#input_credenciales').fadeToggle('slow');
-	})
-	$('#new_fact').click(function(){
-		$('#input_facturacion').fadeToggle('slow');
-	})
-	$('#new_contact').click(function(){
-		$('#input_contacto').fadeToggle('slow');
+		},
+		success: function(data,textStatus,jqXHR){
+			//console.log('Exitos!');
+			data.forEach(function(val,index,arr){
+				let a=$('<option>',{'value':val.id_dom,'text':val.dominio});
+				$('#lista_dominio').append(a);
+			});
+			//console.log(textStatus);
+			//console.log(jqXHR);
+			$('select').formSelect();
+		}
 	})
 
 	$('#btn_add_proveedor').click(function(){
@@ -216,29 +217,29 @@ $(document).ready(function(){
 			'comment'     : $('#comment_input')[0].value
 		};
 		$.ajax({
-			data     : inputs,
-			url      : "assets/ajax_admin.php",
-			type     : "POST",
-			dataType : "JSON",
-			beforeSend: function(xhr){
-				console.log(xhr);
-				console.log(inputs);
-			},
-			error: function(jqXHR,textStatus,errorThrown){
-				console.log('Ups, algo anda mal');
-				console.log(jqXHR);
-				console.log(textStatus);
-				console.log(errorThrown);
+				data     : inputs,
+				url      : "assets/ajax_admin.php",
+				type     : "POST",
+				dataType : "JSON",
+				beforeSend: function(xhr){
+					console.log(xhr);
+					console.log(inputs);
+				},
+				error: function(jqXHR,textStatus,errorThrown){
+					console.log('Ups, algo anda mal');
+					console.log(jqXHR);
+					console.log(textStatus);
+					console.log(errorThrown);
 
-			},
-			success: function(data,textStatus,jqXHR){
-			let fila= new Fila(data,'crd');
-			$('div#tabla_credenciales table tbody').append(fila.crd_fullRow);
-			// console.log(data);
-			//console.log(textStatus);
-			//console.log(jqXHR);
-		}
-	})
+				},
+				success: function(data,textStatus,jqXHR){
+					let fila= new Fila(data,'crd');
+					$('div#tabla_credenciales table tbody').append(fila.crd_fullRow);
+				// console.log(data);
+				//console.log(textStatus);
+				//console.log(jqXHR);
+			}
+		})
 	})
 
 	$('#btn_add_facturacion').click(function(){
@@ -251,30 +252,30 @@ $(document).ready(function(){
 			'costo'     : $('#costo_input')[0].value
 		};
 		$.ajax({
-			data     : inputs,
-			url      : "assets/ajax_admin.php",
-			type     : "POST",
-			dataType : "JSON",
-			beforeSend: function(xhr){
-				console.log(xhr);
-				console.log(inputs);
-			},
-			error: function(jqXHR,textStatus,errorThrown){
-				console.log('Ups, algo anda mal');
-				console.log(jqXHR);
-				console.log(textStatus);
-				console.log(errorThrown);
+				data     : inputs,
+				url      : "assets/ajax_admin.php",
+				type     : "POST",
+				dataType : "JSON",
+				beforeSend: function(xhr){
+					console.log(xhr);
+					console.log(inputs);
+				},
+				error: function(jqXHR,textStatus,errorThrown){
+					console.log('Ups, algo anda mal');
+					console.log(jqXHR);
+					console.log(textStatus);
+					console.log(errorThrown);
 
-			},
-			success: function(data,textStatus,jqXHR){
-				let fila= new Fila(data,'fct');
-				$('div#tabla_facturacion table tbody').append(fila.fct_fullRow);
-			//console.log('Exitos!');
-			console.log(data);
-			//console.log(textStatus);
-			//console.log(jqXHR);
-		}
-	})
+				},
+				success: function(data,textStatus,jqXHR){
+					let fila= new Fila(data,'fct');
+					$('div#tabla_facturacion table tbody').append(fila.fct_fullRow);
+				//console.log('Exitos!');
+				console.log(data);
+				//console.log(textStatus);
+				//console.log(jqXHR);
+			}
+		})
 	})
 
 	$('#btn_add_contacto').click(function(){
@@ -286,30 +287,30 @@ $(document).ready(function(){
 			'comentario'   : $('#coment_input')[0].value,
 		};
 		$.ajax({
-			data     : inputs,
-			url      : "assets/ajax_admin.php",
-			type     : "POST",
-			dataType : "JSON",
-			beforeSend: function(xhr){
-				console.log(xhr);
-				console.log(inputs);
-			},
-			error: function(jqXHR,textStatus,errorThrown){
-				console.log('Ups, algo anda mal');
-				console.log(jqXHR);
-				console.log(textStatus);
-				console.log(errorThrown);
+				data     : inputs,
+				url      : "assets/ajax_admin.php",
+				type     : "POST",
+				dataType : "JSON",
+				beforeSend: function(xhr){
+					console.log(xhr);
+					console.log(inputs);
+				},
+				error: function(jqXHR,textStatus,errorThrown){
+					console.log('Ups, algo anda mal');
+					console.log(jqXHR);
+					console.log(textStatus);
+					console.log(errorThrown);
 
-			},
-			success: function(data,textStatus,jqXHR){
-			//console.log('Exitos!');
-			let fila= new Fila(data,'cnt');
-			$('div#tabla_contacto table tbody').append(fila.cnt_fullRow);
-			console.log(data);
-			//console.log(textStatus);
-			//console.log(jqXHR);
-		}
-	})
+				},
+				success: function(data,textStatus,jqXHR){
+				//console.log('Exitos!');
+				let fila= new Fila(data,'cnt');
+				$('div#tabla_contacto table tbody').append(fila.cnt_fullRow);
+				console.log(data);
+				//console.log(textStatus);
+				//console.log(jqXHR);
+			}
+		})
 	})
 
 
@@ -512,12 +513,14 @@ function btn_done_click(tr)
 
 	})
 }
+
 function btn_cancel_click(tr)
 {
 	$('.btn-controlData a#btn-cancel').on('click',function(){
 		end_buttons(tr);
 	})
 }
+
 function end_buttons(tr)
 {
 	tr.find('td.btn-controlData').remove();
@@ -528,6 +531,7 @@ function end_buttons(tr)
 	tr.find('td.btn-controlData').show('2000');
 	tr.removeClass('0active');
 }
+
 class Fila{
 	constructor(a,table){
 		var end_span='</span>'
@@ -535,43 +539,43 @@ class Fila{
 		var end_td='</td>'
 		switch(table){
 			case 'prv':
-				this.id    ='<span id="id_proveed">'+a.id+end_span
-				this.name  ='<span id="nombre">'+a.nombre+end_span
-				this.cta   ='<span id="cuenta">'+a.cta+end_span
-				this.user  ='<span id="client_area_user">'+a.user+end_span
-				this.pass  ='<span id="client_area_pass">'+a.pass+end_span
-				this.commnt='<span id="coments">'+a.coment+end_span
+			this.id    ='<span id="id_proveed">'+a.id+end_span
+			this.name  ='<span id="nombre">'+a.nombre+end_span
+			this.cta   ='<span id="cuenta">'+a.cta+end_span
+			this.user  ='<span id="client_area_user">'+a.user+end_span
+			this.pass  ='<span id="client_area_pass">'+a.pass+end_span
+			this.commnt='<span id="coments">'+a.coment+end_span
 			break;
 			case 'sts':
-				this.id          ='<span id="id_site">'+a.id+end_span
-				this.dominio     ='<span id="dominio">'+a.dominio+end_span
-				this.hosting     ='<span id="hosting">'+a.hosting+end_span
-				this.ip          ='<span id="ip_site">'+a.ip+end_span
-				this.propietario ='<span id="prop">'+a.propietario+end_span
-				this.status      ='<span id="status">'+a.status+end_span
+			this.id          ='<span id="id_site">'+a.id+end_span
+			this.dominio     ='<span id="dominio">'+a.dominio+end_span
+			this.hosting     ='<span id="hosting">'+a.hosting+end_span
+			this.ip          ='<span id="ip_site">'+a.ip+end_span
+			this.propietario ='<span id="prop">'+a.propietario+end_span
+			this.status      ='<span id="status">'+a.status+end_span
 			break;
 			case 'crd':
-				this.id          ='<span id="id_cred">'+a.id+end_span
-				this.dominio     ='<span id="dominio">'+a.dominio+end_span
-				this.descripcion ='<span id="descripcion">'+a.descripcion+end_span
-				this.user        ='<span id="user">'+a.user+end_span
-				this.passw       ='<span id="passw">'+a.passw+end_span
-				this.comment     ='<span id="comment">'+a.comment+end_span
+			this.id          ='<span id="id_cred">'+a.id+end_span
+			this.dominio     ='<span id="dominio">'+a.dominio+end_span
+			this.descripcion ='<span id="descripcion">'+a.descripcion+end_span
+			this.user        ='<span id="user">'+a.user+end_span
+			this.passw       ='<span id="passw">'+a.passw+end_span
+			this.comment     ='<span id="comment">'+a.comment+end_span
 			break;
 			case 'fct':
-				this.id       ='<span id="id_cred">'+a.id+end_span
-				this.proveedor='<span id="proveedor">'+a.proveedor+end_span
-				this.servicio ='<span id="servicio">'+a.servicio+end_span
-				this.ciclo    ='<span id="ciclo">'+a.ciclo+end_span
-				this.fecha    ='<span id="fecha">'+a.fecha+end_span
-				this.costo    ='<span id="costo">'+a.costo+end_span
+			this.id       ='<span id="id_cred">'+a.id+end_span
+			this.proveedor='<span id="proveedor">'+a.proveedor+end_span
+			this.servicio ='<span id="servicio">'+a.servicio+end_span
+			this.ciclo    ='<span id="ciclo">'+a.ciclo+end_span
+			this.fecha    ='<span id="fecha">'+a.fecha+end_span
+			this.costo    ='<span id="costo">'+a.costo+end_span
 			break;
 			case 'cnt':
-				this.id          ='<span id ="id_cred">'+a.id+end_span
-				this.proveedor   ='<span id ="proveedor">'+a.proveedor+end_span
-				this.contacto    ='<span id ="contacto">'+a.contacto+end_span
-				this.nro_telefono='<span id ="nro_telefono">'+a.nro_telefono+end_span
-				this.comentario  ='<span id ="comentario">'+a.comentario+end_span     
+			this.id          ='<span id ="id_cred">'+a.id+end_span
+			this.proveedor   ='<span id ="proveedor">'+a.proveedor+end_span
+			this.contacto    ='<span id ="contacto">'+a.contacto+end_span
+			this.nro_telefono='<span id ="nro_telefono">'+a.nro_telefono+end_span
+			this.comentario  ='<span id ="comentario">'+a.comentario+end_span     
 			break;
 		}
 	}
@@ -650,6 +654,22 @@ class Fila{
 		return a
 	}
 }
+class Botones{
+	constructor(){
+		this.td_end='</td>'
+		this.a_end='</a>'
+		this.i_end='</i>'
+		this.boton_td='<td class="btn-controlData delete" style="display:none;">'
+		this.boton_a='<a id="btn-delete" class="btn-floating btn-small waves-effect waves-light tooltipped" data-position="top" data-tooltip="Eliminar">'
+		this.boton_i='<i class="material-icons">delete'
 
+	}
+
+	get delete(){
+		let btn_end=this.boton_td+this.boton_a+this.boton_i+this.i_end+this.a_end+this.td_end
+		console.log(this.boton_td)
+		return btn_end
+	}
+}
 
 });
