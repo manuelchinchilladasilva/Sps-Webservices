@@ -3,40 +3,6 @@ include "queries.php";
 
 
 switch  ($_POST["serv"]) {
-	case "proveedores":
-		$insert_prov = $con->prepare("
-			INSERT INTO `it_webservices`.`proveedores` (
-			`nombre`, 
-			`cuenta`, 
-			`client_area_user`, 
-			`client_area_pass`,
-			`coments`
-		) VALUES (?,?,?,?,?)");
-
-		$nombre      = $_POST["nombre"];
-		$cta         = $_POST["cta"];
-		$user        = $_POST["user"];
-		$pass        = $_POST["pass"];
-		$coment      = $_POST["comment"];
-
-		$insert_prov->bind_param("sssss", $nombre, $cta, $user,$pass,$coment);
-
-		if ($insert_prov->execute()) {
-			$sendData = array(
-				'id' => $insert_prov->insert_id, 
-				'nombre' => $nombre,
-				'cta' => $cta,
-				'user' => $user,
-				'pass' => $pass,
-				'coment' => $coment,
-			);
-			echo json_encode($sendData);
-			$insert_prov->close();
-		} else {
-			echo($insert_prov->error);
-			exit;
-		}
-	break;
 
 	case "lista_proveedores":
 		$list_proveeds = "SELECT id_proveed,nombre FROM it_webservices.proveedores;";
@@ -72,6 +38,41 @@ switch  ($_POST["serv"]) {
 		echo json_encode($dominios_array);
 	break;
 
+	case "proveedores":
+		$insert_prov = $con->prepare("
+			INSERT INTO `it_webservices`.`proveedores` (
+			`nombre`, 
+			`cuenta`, 
+			`client_area_user`, 
+			`client_area_pass`,
+			`coments`
+		) VALUES (?,?,?,?,?)");
+
+		$nombre      = $_POST["nombre"];
+		$cta         = $_POST["cta"];
+		$user        = $_POST["user"];
+		$pass        = $_POST["pass"];
+		$coment      = $_POST["comment"];
+
+		$insert_prov->bind_param("sssss", $nombre, $cta, $user,$pass,$coment);
+
+		if ($insert_prov->execute()) {
+			$sendData = array(
+				'id' => $insert_prov->insert_id, 
+				'nombre' => $nombre,
+				'cta' => $cta,
+				'user' => $user,
+				'pass' => $pass,
+				'coment' => $coment,
+			);
+			echo json_encode($sendData);
+			$insert_prov->close();
+		} else {
+			echo($insert_prov->error);
+			exit;
+		}
+	break;
+
 	case "sitios":
 
 			$query_text="INSERT INTO sitios(dominio,hosting,ip_site,prop,status) VALUES (?,?,?,?,?);";
@@ -91,6 +92,7 @@ switch  ($_POST["serv"]) {
 
 		if ($new_site->execute()) {
 			$sendData = array(
+				'id'     	  => $dominio->insert_id,
 				'dominio'     => $dominio,
 				'hosting'     => $hosting,
 				'ip'          => $ip,
@@ -102,6 +104,7 @@ switch  ($_POST["serv"]) {
 		else {
 			echo $new_site->error;
 			$new_site->close();
+			die();
 		}
 
 	break;
@@ -116,56 +119,91 @@ switch  ($_POST["serv"]) {
 		$user        = $_POST["user"];
 		$passw       = $_POST["passw"];
 		$comment     = $_POST["comment"];
+
 		if (!$insert_prov->bind_param("issss",$dominio,$descripcion,$user,$passw,$comment)) {
 			echo json_encode("Algo no anda bien con el binding");
 			die();
 		}
-		if (!$insert_prov->execute()) {
-			// echo $insert_prov->error;
-			echo json_encode($insert_prov->error);
-			die();
-		}
-		$insert_prov->close();
-		echo json_encode("Registro creado credenciales");
-	break;
-
-	case "updt-Credenciales":
-		$query_text="UPDATE `it_webservices`.`credenciales`
-		SET	`descripcion` = ?,
-		`user`            = ?,
-		`passw`           = ?,
-		`comment`         = ?
-		WHERE `id_cred`   = ?;";
-
-		if (!$upd_credenciales = $con->prepare($query_text)) {
-			echo($upd_credenciales->error);
-			exit;
-		}
-		if (!$upd_credenciales->bind_param("sssss", $descripcion, $user, $passw,$comment,$id_cred)) {
-			echo($upd_credenciales->error);
-			exit;
-		}
-
-		$id_cred     = $_POST["id_cred"];
-		$dominio     = $_POST["dominio"];
-		$descripcion = $_POST["descripcion"];
-		$user        = $_POST["user"];
-		$passw       = $_POST["passw"];
-		$comment     = $_POST["comment"];
-
-		if ($upd_credenciales->execute()) {
+		if ($insert_prov->execute()) {
 			$sendData = array(
-				'id_cred' => $id_cred, 
-				'dominio' => $dominio,
+				'id'     	  => $insert_prov->insert_id,
+				'dominio'     => $dominio,
 				'descripcion' => $descripcion,
-				'user' => $user,
-				'passw' => $passw,
-				'comment' => $comment,
+				'user'        => $user,
+				'passw'       => $passw,
+				'comment'     => $comment
 			);
 			echo json_encode($sendData);
-			$upd_credenciales->close();
+			$insert_prov->close();
 		} else {
-			echo($upd_credenciales->error);
+			echo json_encode($insert_prov->error);
+			$insert_prov->close();
+			die();
+		}
+	break;
+
+	case "facturacion":
+		$query_text="INSERT INTO datos_facturacion (id_proveedor, servicio, ciclo_facturacion, fecha_corte, costo) VALUES (?,?,?,?,?);"; 
+
+		$insert_prov = $con->prepare($query_text);
+
+		$proveedor = $_POST["proveedor"];
+		$servicio  = $_POST["servicio"];
+		$ciclo     = $_POST["ciclo"];
+		$fecha     = $_POST["fecha"];
+		$costo     = $_POST["costo"];
+		if (!$insert_prov->bind_param("issds",$proveedor,$servicio,$ciclo,$fecha,$costo)) {
+			echo json_encode("Algo no anda bien con el binding");
+			die();
+		}
+		if ($insert_prov->execute()) {
+			$sendData = array(
+				'id'     	=> $insert_prov->insert_id,
+				'proveedor' => $proveedor,
+				'servicio'  => $servicio,
+				'ciclo'     => $ciclo,
+				'fecha'     => $fecha,
+				'costo'     => $costo
+			);
+			echo json_encode($sendData);
+			$insert_prov->close();
+		} else {
+			echo json_encode($insert_prov->error);
+			$insert_prov->close();
+			die();
+		}
+	break;
+
+	case "contactos":
+		$query_text="INSERT INTO `it_webservices`.`telefonos_contacto`
+			(`id_prov`,
+			`contacto`,
+			`nro_tlf`,
+			`coment`)
+			VALUES (?,?,?,?)";
+		if (!$insert_prov = $con->prepare($query_text)) {
+			echo($insert_prov->error);
+			exit;
+		}
+		$proveedor    = $_POST["proveedor"];
+		$contacto     = $_POST["contacto"];
+		$nro_telefono = $_POST["nro_telefono"];
+		$comentario   = $_POST["comentario"];
+
+		$insert_prov->bind_param("isis", $proveedor, $contacto, $nro_telefono,$comentario);
+
+		if ($insert_prov->execute()) {
+			$sendData = array(
+				'id'          =>$insert_prov->insert_id,
+				'proveedor'   =>$proveedor,
+				'contacto'    =>$contacto,
+				'nro_telefono'=>$nro_telefono,
+				'comentario'  =>$comentario
+			);
+			echo json_encode($sendData);
+			$insert_prov->close();
+		} else {
+			echo($insert_prov->error);
 			exit;
 		}
 	break;
@@ -214,61 +252,46 @@ switch  ($_POST["serv"]) {
 			exit;	
 		}	
 	break;
+	
+	case "updt-Credenciales":
+		$query_text="UPDATE `it_webservices`.`credenciales`
+		SET	`descripcion` = ?,
+		`user`            = ?,
+		`passw`           = ?,
+		`comment`         = ?
+		WHERE `id_cred`   = ?;";
 
-
-	case "facturacion":
-		$query_text="INSERT INTO datos_facturacion (id_proveedor, servicio, ciclo_facturacion, fecha_corte, costo) VALUES (?,?,?,?,?);"; 
-
-		$insert_prov = $con->prepare($query_text);
-
-		$proveedor = $_POST["proveedor"];
-		$servicio  = $_POST["servicio"];
-		$ciclo     = $_POST["ciclo"];
-		$fecha     = $_POST["fecha"];
-		$costo     = $_POST["costo"];
-
-		$insert_prov->bind_param("issss", $proveedor, $servicio, $ciclo,$fecha,$costo);
-		if (!$insert_prov->execute()) {
-			echo json_encode($insert_prov->error);
-			die();
-		}
-		
-		$insert_prov->close();
-		echo json_encode("Registro creado facturacion");
-	break;
-
-	case "contactos":
-		$query_text="INSERT INTO `it_webservices`.`telefonos_contacto`
-			(`id_prov`,
-			`contacto`,
-			`nro_tlf`,
-			`coment`)
-			VALUES (?,?,?,?)";
-		if (!$insert_prov = $con->prepare($query_text)) {
-			echo($insert_prov->error);
+		if (!$upd_credenciales = $con->prepare($query_text)) {
+			echo($upd_credenciales->error);
 			exit;
 		}
-		$proveedor    = $_POST["proveedor"];
-		$contacto     = $_POST["contacto"];
-		$nro_telefono = $_POST["nro_telefono"];
-		$comentario   = $_POST["comentario"];
+		if (!$upd_credenciales->bind_param("sssss", $descripcion, $user, $passw,$comment,$id_cred)) {
+			echo($upd_credenciales->error);
+			exit;
+		}
 
-		$insert_prov->bind_param("isis", $proveedor, $contacto, $nro_telefono,$comentario);
+		$id_cred     = $_POST["id_cred"];
+		$dominio     = $_POST["dominio"];
+		$descripcion = $_POST["descripcion"];
+		$user        = $_POST["user"];
+		$passw       = $_POST["passw"];
+		$comment     = $_POST["comment"];
 
-		if ($insert_prov->execute()) {
+		if ($upd_credenciales->execute()) {
 			$sendData = array(
-				'proveedor'    => $proveedor,
-				'contacto'     => $contacto,
-				'nro_telefono' => $nro_telefono,
-				'comentario'   => $comentario
+				'id_cred' => $id_cred, 
+				'dominio' => $dominio,
+				'descripcion' => $descripcion,
+				'user' => $user,
+				'passw' => $passw,
+				'comment' => $comment,
 			);
 			echo json_encode($sendData);
-			$insert_prov->close();
+			$upd_credenciales->close();
 		} else {
-			echo($insert_prov->error);
+			echo($upd_credenciales->error);
 			exit;
 		}
-		// echo json_encode("Registro creado Contactos");
 	break;
 	default:
  		# code...

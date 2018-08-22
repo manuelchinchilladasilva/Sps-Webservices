@@ -319,7 +319,7 @@ function print_body($query,$tabla)
 			while ( $row = $query->fetch_assoc() ) 
 			{
 				$_b.='<tr>';
-				$_b.='<td class="l_hidden" id="id_proveedor"><span id="id_site">'.$row["id_site"].'</span></td>';
+				$_b.='<td class="l_hidden" id="id_site"><span id="id_site">'.$row["id_site"].'</span></td>';
 				$_b.='<td><span id="dominio">'.$row["dominio"].'</span></td>';
 				$_b.='<td><span id="hosting">'.$row["nombre"].'</span></td>';
 				$_b.='<td><span id="ip_site">'.$row["ip_site"].'</span></td>';
@@ -333,8 +333,8 @@ function print_body($query,$tabla)
 		case 'Credenciales':
 			while ( $row = $query->fetch_assoc() ) 
 			{
-				$_b.='<tr id="'.$row["id_cred"].'">';
-				$_b.='<td class="l_hidden" id="id_proveedor"><span id="id_cred">'.$row["id_cred"].'</span></td>';
+				$_b.='<tr>';
+				$_b.='<td class="l_hidden" id="id_credencial"><span id="id_cred">'.$row["id_cred"].'</span></td>';
 				$_b.='<td><span id="dominio">'.$row["dominio"].'</span></td>';
 				$_b.='<td><span id="descripcion">'.$row["descripcion"].'</span></td>';
 				$_b.='<td><span id="user">'.$row["user"].'</span></td>';

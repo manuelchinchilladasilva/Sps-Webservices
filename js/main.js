@@ -158,7 +158,7 @@ $(document).ready(function(){
 				console.log('Exitos!');
 				console.log(data);
 
-				let fila= new Fila(data);
+				let fila= new Fila(data,'prv');
 				$('div#tabla_proveedores table tbody').append(fila.pro_fullRow);
 				console.log(textStatus);
 				console.log(jqXHR);
@@ -196,7 +196,10 @@ $(document).ready(function(){
 			success: function(data,textStatus,jqXHR){
 				console.log('Exitos!');
 				console.log(data);
-				forEach
+				let fila= new Fila(data,'sts');
+
+				$('div#tabla_sitios table tbody').append(fila.sts_fullRow);
+
 				console.log(textStatus);
 				console.log(jqXHR);
 			}
@@ -229,8 +232,9 @@ $(document).ready(function(){
 
 			},
 			success: function(data,textStatus,jqXHR){
-			//console.log('Exitos!');
-			console.log(data);
+			let fila= new Fila(data,'crd');
+			$('div#tabla_credenciales table tbody').append(fila.crd_fullRow);
+			// console.log(data);
 			//console.log(textStatus);
 			//console.log(jqXHR);
 		}
@@ -263,6 +267,8 @@ $(document).ready(function(){
 
 			},
 			success: function(data,textStatus,jqXHR){
+				let fila= new Fila(data,'fct');
+				$('div#tabla_facturacion table tbody').append(fila.fct_fullRow);
 			//console.log('Exitos!');
 			console.log(data);
 			//console.log(textStatus);
@@ -297,6 +303,8 @@ $(document).ready(function(){
 			},
 			success: function(data,textStatus,jqXHR){
 			//console.log('Exitos!');
+			let fila= new Fila(data,'cnt');
+			$('div#tabla_contacto table tbody').append(fila.cnt_fullRow);
 			console.log(data);
 			//console.log(textStatus);
 			//console.log(jqXHR);
@@ -521,14 +529,51 @@ function end_buttons(tr)
 	tr.removeClass('0active');
 }
 class Fila{
-	constructor(a){
-		let end_span='</span>'
-		this.id    ='<span id="id_proveed">'+a.id+end_span
-		this.name  ='<span id="nombre">'+a.nombre+end_span
-		this.cta   ='<span id="cuenta">'+a.cta+end_span
-		this.user  ='<span id="client_area_user">'+a.user+end_span
-		this.pass  ='<span id="client_area_pass">'+a.pass+end_span
-		this.commnt='<span id="coments">'+a.coment+end_span
+	constructor(a,table){
+		var end_span='</span>'
+		var td='<td>'
+		var end_td='</td>'
+		switch(table){
+			case 'prv':
+				this.id    ='<span id="id_proveed">'+a.id+end_span
+				this.name  ='<span id="nombre">'+a.nombre+end_span
+				this.cta   ='<span id="cuenta">'+a.cta+end_span
+				this.user  ='<span id="client_area_user">'+a.user+end_span
+				this.pass  ='<span id="client_area_pass">'+a.pass+end_span
+				this.commnt='<span id="coments">'+a.coment+end_span
+			break;
+			case 'sts':
+				this.id          ='<span id="id_site">'+a.id+end_span
+				this.dominio     ='<span id="dominio">'+a.dominio+end_span
+				this.hosting     ='<span id="hosting">'+a.hosting+end_span
+				this.ip          ='<span id="ip_site">'+a.ip+end_span
+				this.propietario ='<span id="prop">'+a.propietario+end_span
+				this.status      ='<span id="status">'+a.status+end_span
+			break;
+			case 'crd':
+				this.id          ='<span id="id_cred">'+a.id+end_span
+				this.dominio     ='<span id="dominio">'+a.dominio+end_span
+				this.descripcion ='<span id="descripcion">'+a.descripcion+end_span
+				this.user        ='<span id="user">'+a.user+end_span
+				this.passw       ='<span id="passw">'+a.passw+end_span
+				this.comment     ='<span id="comment">'+a.comment+end_span
+			break;
+			case 'fct':
+				this.id       ='<span id="id_cred">'+a.id+end_span
+				this.proveedor='<span id="proveedor">'+a.proveedor+end_span
+				this.servicio ='<span id="servicio">'+a.servicio+end_span
+				this.ciclo    ='<span id="ciclo">'+a.ciclo+end_span
+				this.fecha    ='<span id="fecha">'+a.fecha+end_span
+				this.costo    ='<span id="costo">'+a.costo+end_span
+			break;
+			case 'cnt':
+				this.id          ='<span id ="id_cred">'+a.id+end_span
+				this.proveedor   ='<span id ="proveedor">'+a.proveedor+end_span
+				this.contacto    ='<span id ="contacto">'+a.contacto+end_span
+				this.nro_telefono='<span id ="nro_telefono">'+a.nro_telefono+end_span
+				this.comentario  ='<span id ="comentario">'+a.comentario+end_span     
+			break;
+		}
 	}
 	get pro_fullRow(){
 		let td='<td>'
@@ -544,7 +589,65 @@ class Fila{
 		a+='</tr>'
 
 		return a
+	}
+	get sts_fullRow(){
+		let td='<td>'
+		let end_td='</td>'
 
+		let a='<tr>'
+		a+='<td class="l_hidden" id="id_site">'+this.id+end_td
+		a+=td+this.dominio+end_td
+		a+=td+this.hosting+end_td
+		a+=td+this.ip+end_td
+		a+=td+this.propietario+end_td
+		a+=td+this.status+end_td
+		a+='</tr>'
+
+		return a
+	}
+	get crd_fullRow(){
+		let td='<td>'
+		let end_td='</td>'
+
+		let a='<tr>'
+		a+='<td class="l_hidden" id="id_credencial">'+this.id+end_td
+		a+=td+this.dominio+end_td
+		a+=td+this.descripcion+end_td
+		a+=td+this.user+end_td
+		a+=td+this.passw+end_td
+		a+=td+this.comment+end_td
+		a+='</tr>'
+
+		return a
+	}
+	get fct_fullRow(){
+		let td='<td>'
+		let end_td='</td>'
+
+		let a='<tr>'
+		a+='<td class="l_hidden" id="id_credencial">'+this.id+end_td
+		a+=td+this.proveedor+end_td
+		a+=td+this.servicio+end_td
+		a+=td+this.ciclo+end_td
+		a+=td+this.fecha+end_td
+		a+=td+this.costo+end_td
+		a+='</tr>'
+
+		return a
+	}
+	get cnt_fullRow(){
+		let td='<td>'
+		let end_td='</td>'
+
+		let a='<tr>'
+		a+='<td class="l_hidden" id="id_credencial">'+this.id+end_td
+		a+=td+this.proveedor+end_td
+		a+=td+this.contacto+end_td
+		a+=td+this.nro_telefono+end_td
+		a+=td+this.comentario+end_td
+		a+='</tr>'
+
+		return a
 	}
 }
 
