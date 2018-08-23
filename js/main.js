@@ -1,4 +1,171 @@
 $(document).ready(function(){
+	class Fila{
+		constructor(a,table){
+			var end_span='</span>'
+			var td='<td>'
+			var end_td='</td>'
+			switch(table){
+				case 'prv':
+				this.id    ='<span id="id_proveed">'+a.id+end_span
+				this.name  ='<span id="nombre">'+a.nombre+end_span
+				this.cta   ='<span id="cuenta">'+a.cta+end_span
+				this.user  ='<span id="client_area_user">'+a.user+end_span
+				this.pass  ='<span id="client_area_pass">'+a.pass+end_span
+				this.commnt='<span id="coments">'+a.coment+end_span
+				break;
+				case 'sts':
+				this.id          ='<span id="id_site">'+a.id+end_span
+				this.dominio     ='<span id="dominio">'+a.dominio+end_span
+				this.hosting     ='<span id="hosting">'+a.hosting+end_span
+				this.ip          ='<span id="ip_site">'+a.ip+end_span
+				this.propietario ='<span id="prop">'+a.propietario+end_span
+				this.status      ='<span id="status">'+a.status+end_span
+				break;
+				case 'crd':
+				this.id          ='<span id="id_cred">'+a.id+end_span
+				this.dominio     ='<span id="dominio">'+a.dominio+end_span
+				this.descripcion ='<span id="descripcion">'+a.descripcion+end_span
+				this.user        ='<span id="user">'+a.user+end_span
+				this.passw       ='<span id="passw">'+a.passw+end_span
+				this.comment     ='<span id="comment">'+a.comment+end_span
+				break;
+				case 'fct':
+				this.id       ='<span id="id_cred">'+a.id+end_span
+				this.proveedor='<span id="proveedor">'+a.proveedor+end_span
+				this.servicio ='<span id="servicio">'+a.servicio+end_span
+				this.ciclo    ='<span id="ciclo">'+a.ciclo+end_span
+				this.fecha    ='<span id="fecha">'+a.fecha+end_span
+				this.costo    ='<span id="costo">'+a.costo+end_span
+				break;
+				case 'cnt':
+				this.id          ='<span id ="id_cred">'+a.id+end_span
+				this.proveedor   ='<span id ="proveedor">'+a.proveedor+end_span
+				this.contacto    ='<span id ="contacto">'+a.contacto+end_span
+				this.nro_telefono='<span id ="nro_telefono">'+a.nro_telefono+end_span
+				this.comentario  ='<span id ="comentario">'+a.comentario+end_span     
+				break;
+			}
+		}
+		get pro_fullRow(){
+			let td='<td>'
+			let end_td='</td>'
+
+			let a='<tr>'
+			a+='<td class="l_hidden" id="id_proveedor">'+this.id+end_td
+			a+=td+this.name+end_td
+			a+=td+this.cta+end_td
+			a+=td+this.user+end_td
+			a+=td+this.pass+end_td
+			a+=td+this.commnt+end_td
+			a+='</tr>'
+
+			return a
+		}
+		get sts_fullRow(){
+			let td='<td>'
+			let end_td='</td>'
+
+			let a='<tr>'
+			a+='<td class="l_hidden" id="id_site">'+this.id+end_td
+			a+=td+this.dominio+end_td
+			a+=td+this.hosting+end_td
+			a+=td+this.ip+end_td
+			a+=td+this.propietario+end_td
+			a+=td+this.status+end_td
+			a+='</tr>'
+
+			return a
+		}
+		get crd_fullRow(){
+			let td='<td>'
+			let end_td='</td>'
+
+			let a='<tr>'
+			a+='<td class="l_hidden" id="id_credencial">'+this.id+end_td
+			a+=td+this.dominio+end_td
+			a+=td+this.descripcion+end_td
+			a+=td+this.user+end_td
+			a+=td+this.passw+end_td
+			a+=td+this.comment+end_td
+			a+='</tr>'
+
+			return a
+		}
+		get fct_fullRow(){
+			let td='<td>'
+			let end_td='</td>'
+
+			let a='<tr>'
+			a+='<td class="l_hidden" id="id_credencial">'+this.id+end_td
+			a+=td+this.proveedor+end_td
+			a+=td+this.servicio+end_td
+			a+=td+this.ciclo+end_td
+			a+=td+this.fecha+end_td
+			a+=td+this.costo+end_td
+			a+='</tr>'
+
+			return a
+		}
+		get cnt_fullRow(){
+			let td='<td>'
+			let end_td='</td>'
+
+			let a='<tr>'
+			a+='<td class="l_hidden" id="id_credencial">'+this.id+end_td
+			a+=td+this.proveedor+end_td
+			a+=td+this.contacto+end_td
+			a+=td+this.nro_telefono+end_td
+			a+=td+this.comentario+end_td
+			a+='</tr>'
+
+			return a
+		}
+	}
+	class Botones{
+		constructor(){
+			this.a='</td>'
+			this.b='</a>'
+			this.c='</i>'
+		}
+
+		get delete(){
+			let a='<td class="btn-controlData delete" style="display:none;">'
+			let b='<a id="btn-delete" class="btn-floating btn-small waves-effect waves-light tooltipped" data-position="top" data-tooltip="Eliminar">'
+			let c='<i class="material-icons">delete'
+			let z=a+b+c+this.c+this.b+this.a
+
+			console.log(z)
+			return z
+		}
+
+		get edit(){
+			let a='<td class="btn-controlData edit" style="display:none;">'
+			let b='<a id="btn-edit" class="btn-floating btn-small waves-effect waves-light tooltipped" data-position="top" data-tooltip="Editar">'
+			let c='<i class="material-icons">edit'
+			let z=a+b+c+this.c+this.b+this.a
+
+			return z
+		}
+
+		get cancel(){
+			let a='<td class="btn-controlData clear" style="display:none;">'
+			let b='<a id="btn-cancel" class="btn-floating btn-small waves-effect waves-light tooltipped btn_0active" data-position="top" data-tooltip="Cancelar">'
+			let c='<i class="material-icons">clear'
+			let z=a+b+c+this.c+this.b+this.a
+
+			return z
+		}
+
+		get done(){
+			let a='<td class="btn-controlData done" style="display:none;">'
+			let b='<a id="btn-done" class="btn-floating btn-small waves-effect waves-light tooltipped btn_0active" data-position="top" data-tooltip="Hecho">'
+			let c='<i class="material-icons">done'
+			let z=a+b+c+this.c+this.b+this.a
+
+			return z
+		}
+	}
+
 	$('.sidenav').sidenav();
 	$('.tabs').tabs();
 	$('select').formSelect();
@@ -17,60 +184,17 @@ $(document).ready(function(){
 		$('#input_contacto').fadeToggle('slow');
 	})
 
-	var btn_delete = $('<td>',{
-		'style':'display:none',
-		'class':'btn-controlData delete'
-	}).append($('<a>',{
-		'id':'btn-delete',
-		'class':'btn-floating btn-small waves-effect waves-light tooltipped',
-		'data-position':'top',
-		'data-tooltip':'Eliminar'
-	}).append($('<i>',{
-		'class':'material-icons',
-		'text':'delete'
-	})));
+	let boton           = new Botones()
+	var btn_delete      = $(boton.delete)
+	var btn_edit        = $(boton.edit)
+	var btn_edit_done   = $(boton.done)
+	var btn_edit_cancel = $(boton.cancel)
 
-	var btn_edit = 
-	$('<td>',{
-		'style':'display:none',
-		'class':'btn-controlData edit'
-	}).append($('<a>',{
-		'id':'btn-edit',
-		'class':'btn-floating btn-small waves-effect waves-light tooltipped',
-		'data-position':'top',
-		'data-tooltip':'Editar'
-	}).append($('<i>',{
-		'class':'material-icons',
-		'text':'edit'
-	})));
 
-	var btn_edit_cancel=$('<td>',{
-		'style':'display:none',
-		'class':'btn-controlData clear'
-	}).append($('<a>',{
-		'style':'display:none',
-		'id':'btn-cancel',
-		'class':'btn-floating btn-small waves-effect waves-light tooltipped btn_0active',
-		'data-position':'top',
-		'data-tooltip':'Cancelar'
-	}).append($('<i>',{
-		'class':'material-icons',
-		'text':'clear'
-	})))
 
-	var btn_edit_done=$('<td>',{
-		'style':'display:none',
-		'class':'btn-controlData done'
-	}).append($('<a>',{
-		'style':'display:none',
-		'id':'btn-done',
-		'class':'btn-floating btn-small waves-effect waves-light tooltipped btn_0active',
-		'data-position':'top',
-		'data-tooltip':'Hecho'
-	}).append($('<i>',{
-		'class':'material-icons',
-		'text':'done'
-	})))
+
+
+
 
 
 	$.ajax({
@@ -339,7 +463,7 @@ contiene la clase
 btn-controlGata
 lo muestra en fadein
 */
-tr.find('td.btn-controlData').fadeIn('2000');
+	tr.find('td.btn-controlData').fadeIn('2000');
 }
 $('td').hover(td_onHoover,ex_hoover);
 
@@ -532,144 +656,7 @@ function end_buttons(tr)
 	tr.removeClass('0active');
 }
 
-class Fila{
-	constructor(a,table){
-		var end_span='</span>'
-		var td='<td>'
-		var end_td='</td>'
-		switch(table){
-			case 'prv':
-			this.id    ='<span id="id_proveed">'+a.id+end_span
-			this.name  ='<span id="nombre">'+a.nombre+end_span
-			this.cta   ='<span id="cuenta">'+a.cta+end_span
-			this.user  ='<span id="client_area_user">'+a.user+end_span
-			this.pass  ='<span id="client_area_pass">'+a.pass+end_span
-			this.commnt='<span id="coments">'+a.coment+end_span
-			break;
-			case 'sts':
-			this.id          ='<span id="id_site">'+a.id+end_span
-			this.dominio     ='<span id="dominio">'+a.dominio+end_span
-			this.hosting     ='<span id="hosting">'+a.hosting+end_span
-			this.ip          ='<span id="ip_site">'+a.ip+end_span
-			this.propietario ='<span id="prop">'+a.propietario+end_span
-			this.status      ='<span id="status">'+a.status+end_span
-			break;
-			case 'crd':
-			this.id          ='<span id="id_cred">'+a.id+end_span
-			this.dominio     ='<span id="dominio">'+a.dominio+end_span
-			this.descripcion ='<span id="descripcion">'+a.descripcion+end_span
-			this.user        ='<span id="user">'+a.user+end_span
-			this.passw       ='<span id="passw">'+a.passw+end_span
-			this.comment     ='<span id="comment">'+a.comment+end_span
-			break;
-			case 'fct':
-			this.id       ='<span id="id_cred">'+a.id+end_span
-			this.proveedor='<span id="proveedor">'+a.proveedor+end_span
-			this.servicio ='<span id="servicio">'+a.servicio+end_span
-			this.ciclo    ='<span id="ciclo">'+a.ciclo+end_span
-			this.fecha    ='<span id="fecha">'+a.fecha+end_span
-			this.costo    ='<span id="costo">'+a.costo+end_span
-			break;
-			case 'cnt':
-			this.id          ='<span id ="id_cred">'+a.id+end_span
-			this.proveedor   ='<span id ="proveedor">'+a.proveedor+end_span
-			this.contacto    ='<span id ="contacto">'+a.contacto+end_span
-			this.nro_telefono='<span id ="nro_telefono">'+a.nro_telefono+end_span
-			this.comentario  ='<span id ="comentario">'+a.comentario+end_span     
-			break;
-		}
-	}
-	get pro_fullRow(){
-		let td='<td>'
-		let end_td='</td>'
 
-		let a='<tr>'
-		a+='<td class="l_hidden" id="id_proveedor">'+this.id+end_td
-		a+=td+this.name+end_td
-		a+=td+this.cta+end_td
-		a+=td+this.user+end_td
-		a+=td+this.pass+end_td
-		a+=td+this.commnt+end_td
-		a+='</tr>'
 
-		return a
-	}
-	get sts_fullRow(){
-		let td='<td>'
-		let end_td='</td>'
-
-		let a='<tr>'
-		a+='<td class="l_hidden" id="id_site">'+this.id+end_td
-		a+=td+this.dominio+end_td
-		a+=td+this.hosting+end_td
-		a+=td+this.ip+end_td
-		a+=td+this.propietario+end_td
-		a+=td+this.status+end_td
-		a+='</tr>'
-
-		return a
-	}
-	get crd_fullRow(){
-		let td='<td>'
-		let end_td='</td>'
-
-		let a='<tr>'
-		a+='<td class="l_hidden" id="id_credencial">'+this.id+end_td
-		a+=td+this.dominio+end_td
-		a+=td+this.descripcion+end_td
-		a+=td+this.user+end_td
-		a+=td+this.passw+end_td
-		a+=td+this.comment+end_td
-		a+='</tr>'
-
-		return a
-	}
-	get fct_fullRow(){
-		let td='<td>'
-		let end_td='</td>'
-
-		let a='<tr>'
-		a+='<td class="l_hidden" id="id_credencial">'+this.id+end_td
-		a+=td+this.proveedor+end_td
-		a+=td+this.servicio+end_td
-		a+=td+this.ciclo+end_td
-		a+=td+this.fecha+end_td
-		a+=td+this.costo+end_td
-		a+='</tr>'
-
-		return a
-	}
-	get cnt_fullRow(){
-		let td='<td>'
-		let end_td='</td>'
-
-		let a='<tr>'
-		a+='<td class="l_hidden" id="id_credencial">'+this.id+end_td
-		a+=td+this.proveedor+end_td
-		a+=td+this.contacto+end_td
-		a+=td+this.nro_telefono+end_td
-		a+=td+this.comentario+end_td
-		a+='</tr>'
-
-		return a
-	}
-}
-class Botones{
-	constructor(){
-		this.td_end='</td>'
-		this.a_end='</a>'
-		this.i_end='</i>'
-		this.boton_td='<td class="btn-controlData delete" style="display:none;">'
-		this.boton_a='<a id="btn-delete" class="btn-floating btn-small waves-effect waves-light tooltipped" data-position="top" data-tooltip="Eliminar">'
-		this.boton_i='<i class="material-icons">delete'
-
-	}
-
-	get delete(){
-		let btn_end=this.boton_td+this.boton_a+this.boton_i+this.i_end+this.a_end+this.td_end
-		console.log(this.boton_td)
-		return btn_end
-	}
-}
 
 });
