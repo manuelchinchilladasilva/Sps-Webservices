@@ -134,7 +134,6 @@ $(document).ready(function(){
 			let c='<i class="material-icons">delete'
 			let z=a+b+c+this.c+this.b+this.a
 
-			console.log(z)
 			return z
 		}
 
@@ -165,6 +164,17 @@ $(document).ready(function(){
 			return z
 		}
 	}
+	class Frm{
+		constructor(a,b){
+			this.value=a
+			this.text=b
+		}
+
+		get option(){
+			let a='<option value="'+this.value+'">'+this.text+'</option>'
+			return a
+		}
+	}
 
 	$('.sidenav').sidenav();
 	$('.tabs').tabs();
@@ -190,13 +200,6 @@ $(document).ready(function(){
 	var btn_edit_done   = $(boton.done)
 	var btn_edit_cancel = $(boton.cancel)
 
-
-
-
-
-
-
-
 	$.ajax({
 		data     : {'serv'    : 'lista_proveedores'},
 		url      : "assets/ajax_admin.php",
@@ -216,10 +219,11 @@ $(document).ready(function(){
 			//console.log('Exitos!');
 			//console.log(data);
 			data.forEach(function(val,index,arr){
-				$('#lista_hosting').append($('<option>',{'value':val.id_proveed,'text':val.nombre}));
-				$('#hosting_').append($('<option>',{'value':val.id_proveed,'text':val.nombre}));
-				$('#lista_proveedores').append($('<option>',{'value':val.id_proveed,'text':val.nombre}));
-				$('#lista_proveedores_cont').append($('<option>',{'value':val.id_proveed,'text':val.nombre}));
+				let opt= new Frm(val.id_proveed,val.nombre)
+				$('#lista_hosting').append($(opt.option))
+				$('#hosting_').append($(opt.option));
+				$('#lista_proveedores').append($(opt.option));
+				$('#lista_proveedores_cont').append($(opt.option));
 			});
 			//console.log(data);
 			//console.log(textStatus);
@@ -245,8 +249,8 @@ $(document).ready(function(){
 		success: function(data,textStatus,jqXHR){
 			//console.log('Exitos!');
 			data.forEach(function(val,index,arr){
-				let a=$('<option>',{'value':val.id_dom,'text':val.dominio});
-				$('#lista_dominio').append(a);
+				let opt= new Frm(val.id_dom,val.dominio)
+				$('#lista_dominio').append($(opt.option))
 			});
 			//console.log(textStatus);
 			//console.log(jqXHR);
